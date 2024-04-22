@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Historia - MintyFinance</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+
+    <form th:action="@{/history}" method="get" class="d-flex align-items-center">
+        <label class="mt-2">Data:</label>
+        <label class="direction-option mt-2" title="Rosnąco">
+            <input type="radio" name="direction" value="asc" th:checked="${direction == 'asc'}" />
+            <i class="fas fa-caret-up"></i>
+        </label>
+        <input type="hidden" name="sortBy" value="transactionDate" />
+        <label class="direction-option" title="Malejąco">
+            <input type="radio" name="direction" value="desc" th:checked="${direction == 'desc'}" />
+            <i class="fas fa-caret-down"></i>
+        </label>
+
+        <label for="filter" class="ml-4 mr-3 mt-2">Filtr:</label>
+        <select id="filter" name="isIncome" class="w-15 form-control">
+            <option value="">Wszystkie</option>
+            <option value="true" th:selected="${isIncome != null && isIncome}">Przychody</option>
+            <option value="false" th:selected="${isIncome != null && !isIncome}">Wydatki</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary ml-4">Sortuj i filtruj</button>
+    </form>
+
+    <h2 class="list-heading">Historia transakcji</h2>
+
+    <form th:action="@{/history/delete}" method="post" data-confirm="Czy na pewno usunąć całą historię?" class="position-button center">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit" class="btn btn-outline-danger">
+            <i class="fas fa-trash-alt"></i> Usuń historię
+        </button>
+    </form>
+
+    <ul class="list-border">
+        <li th:each="historyItem: ${history}">
+            <span class="colored-text">Nazwa pozycji: </span>
+            <span th:text="${historyItem.getPosition().getName()}"></span><br>
+            <span class="colored-text">Kwota: </span>
+            <span th:style="${historyItem.getAmount().compareTo(zero) < 0} ? 'color: #ff4d4d;' : ''" th:text="${historyItem.getAmount()} + ' zł'"></span><br>
+            <span class="colored-text">Data:</span>
+            <span th:text="${historyItem.getFormattedTransactionDate()}"></span><br>
+            <span class="colored-text">Stan konta przed transakcją: </span>
+            <span th:style="${historyItem.getBalance_before_transaction().compareTo(zero) < 0} ? 'color: #ff4d4d;' : ''" th:text="${historyItem.getBalance_before_transaction()} + ' zł'"></span><br>
+            <span class="colored-text">Stan konta po transakcji: </span>
+            <span th:style="${historyItem.getBalance_after_transaction().compareTo(zero) < 0} ? 'color: #ff4d4d;' : ''" th:text="${historyItem.getBalance_after_transaction()} + ' zł'"></span>
+
+            <form th:action="@{'/history/delete/' + ${historyItem.getTransactionHistoryId()}}" method="POST" data-confirm="Czy na pewno usunąć wpis z historii" class="position-button mt-1">
+                <input type="hidden" name="_method" value="DELETE" />
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="fas fa-trash-alt"></i> Usuń
+                </button>
+            </form>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

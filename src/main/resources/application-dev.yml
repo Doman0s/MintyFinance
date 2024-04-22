@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+  liquibase:
+    contexts: dev
+  web:
+    resources:
+      static-locations: classpath:/static/,file:./uploads/
+#server:
+#  servlet:
+#    session:
+#      persistent: false

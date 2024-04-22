@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div class="my-container">
+    <main class="main-content" layout:fragment="content">
+        <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+            Belka z powiadomieniami
+        </p>
+
+        <h2 class="list-heading" th:text="${heading}">Pozycje użytkownika według kategorii</h2>
+        <h6 class="list-description" th:text="${description}">Opis kategorii</h6>
+        <ul class="position-list" th:remove="all-but-first">
+            <li class="position-list-item" th:each="position: ${positions}">
+                <div class="position-list-item-card">
+                    <div class="position-list-item-content">
+                        <h3 class="position-list-item-title"
+                            th:text="${position.isInactive()} ? ${position.name} + ' - NIEAKTYWNA' : ${position.name}">
+                            Nazwa pozycji
+                        </h3>
+                    </div>
+
+                    <div class="position-list-item-rating">
+                        <h5 th:text="${position.description}"></h5>
+                        <h5>
+                            <span class="colored-text">Kwota: </span>
+                            <span th:style="${!position.isIncome} ? 'color: #ff4d4d;' : ''"
+                                  th:text="${position.amount} + ' zł'"></span>
+                        </h5>
+                        <h5>
+                            <i class="fas fa-star colored-text"></i>
+                            <span class="colored-text">Priorytet: </span>
+                            <span th:text="${position.priority} + '/10'"></span>
+                        </h5>
+                        <h5>
+                            <span class="colored-text">Najbliższa data wykonania: </span>
+                            <span th:text="${position.isInactive()} ? 'BRAK' : ${position.getFormattedRebillDateTime()}"></span>
+                        </h5>
+                        <h5>
+                            <span class="colored-text">Częstotliwość: </span>
+                            <span th:text="${position.getRecurrenceType().description}"></span>
+                        </h5>
+                    </div>
+
+                    <div class="position-buttons">
+                        <a th:href="@{|/position/edit/${position.getPositionId()}|}" class="btn btn-outline-primary position-button">
+                            <i class="fas fa-edit"></i> Edytuj
+                        </a>
+                        <form data-confirm="Czy na pewno usunąć?" th:action="@{'/position/delete/' + ${position.getPositionId()}}" method="POST" class="position-button">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="fas fa-trash-alt"></i> Usuń
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </main>
+</div>
+</body>
+</html>

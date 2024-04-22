@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Zarządzanie finansami</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+    <h2 class="list-heading">Zarządzanie finansami</h2>
+    <ul class="list-border">
+        <li><a href="#" th:href="@{/position/add}">Dodaj pozycję</a></li>
+        <li><a href="#" th:href="@{/category/categories}">Kategorie</a></li>
+        <li><a href="#" th:href="@{/category/add}">Dodaj kategorię</a></li>
+        <li><a href="#" th:href="@{/goal/goals}">Cele</a></li>
+        <li><a href="#" th:href="@{/goal/add}">Dodaj cel</a></li>
+        <li><a href="#" th:href="@{/history}">Historia</a></li>
+        <li><a href="#" th:href="@{/history/summary}">Podsumowanie</a></li>
+    </ul>
+</main>
+</body>
+</html>

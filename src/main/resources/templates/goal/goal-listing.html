@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Cele - MintyFinance</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+
+    <h2 class="list-heading">Cele</h2>
+    <p class="list-description">
+        Poniżej znajdziesz listę wszystkich twoich celów.
+    </p>
+
+    <form th:action="@{/goal/delete}" method="POST" data-confirm="Czy na pewno usunąć wszystkie cele?" class="center">
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit" class="btn btn-outline-danger">
+            <i class="fas fa-trash-alt"></i> Usuń wszystkie cele
+        </button>
+    </form>
+
+    <ul class="list-border">
+        <li th:each="goal: ${goals}">
+            <span class="colored-text">Nazwa: </span>
+            <span th:text="${goal.name}"></span><br>
+            <span class="colored-text">Kwota: </span>
+            <span th:text="${goal.amount} + ' zł'"></span><br>
+            <span class="colored-text-dark" th:if="${goal.isCompleted()}">Zakończony!</span>
+
+            <div class="button-container">
+                <a th:if="${!goal.isCompleted}" th:href="@{|/goal/complete/${goal.getGoalId()}|}" class="btn btn-outline-success">
+                    <i class="fas fa-check"></i> Wykonaj
+                </a>
+
+                <a th:if="${!goal.isCompleted}" th:href="@{|/goal/edit/${goal.getGoalId()}|}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit"></i> Edytuj
+                </a>
+
+                <form data-confirm="Czy na pewno usunąć?" th:action="@{/goal/delete/{goalId}(goalId=${goal.goalId})}" method="POST">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button type="submit" class="btn btn-outline-danger">
+                        <i class="fas fa-trash-alt"></i> Usuń
+                    </button>
+                </form>
+            </div>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

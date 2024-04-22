@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>MintyFinance</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+    <script defer src="../static/scripts/common.js" th:src="@{/scripts/common.js}"></script>
+    <script defer src="../static/scripts/additionalConfirmation.js" th:src="@{/scripts/additionalConfirmation.js}"></script>
+    <script defer src="../static/scripts/switchTheme.js" th:src="@{/scripts/switchTheme.js}"></script>
+
+    <link rel="stylesheet" href="../static/styles/main.css" th:href="@{/styles/main.css}">
+</head>
+<body>
+<div class="my-container">
+    <ul class="menu">
+        <li class="menu-logo-container">
+            <a href="#" th:href="@{/}">
+                <i class="fa-solid fa-coins fa-lg"></i> Minty Finance
+            </a>
+        </li>
+        <li class="menu-toggle">
+            <a href="#"><i id="toggle-icon" class="far fa-plus-square"></i></a>
+        </li>
+        <li class="menu-item">
+            <a href="#" th:href="@{/user/finance-management}" sec:authorize="isAuthenticated()">Zarządzanie finansami</a>
+        </li>
+        <li class="menu-item">
+            <a href="#" th:href="@{/user/account}" sec:authorize="isAuthenticated()">Moje konto</a>
+        </li>
+        <li class="menu-item">
+            <a href="#" th:href="@{/help-support}">Pomoc i wsparcie</a>
+        </li>
+        <li class="menu-item" sec:authorize="hasRole('ADMIN')">
+            <a href="#" th:href="@{/admin}">Admin</a>
+        </li>
+        <li class="menu-item theme-switcher ml-4" id="themeSwitcher" onclick="switchTheme()">
+            <span class="colored-text-dark">Tryb aplikacji:</span>
+            <i class="fas fa-moon" id="moonIcon"></i>
+            <i class="fas fa-sun" id="sunIcon" style="display:none;"></i>
+        </li>
+        <li class="menu-item">
+            <a href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()">Zaloguj się</a>
+        </li>
+
+        <li class="menu-item" sec:authorize="isAuthenticated()">
+            <ul class="menu">
+                <li class="submenu-item">
+                    <span class="colored-text">Witaj </span>
+                    <span th:text="${firstName} + '!'"></span>
+                </li>
+                <li class="submenu-item">
+                    <span class="colored-text">Twoje saldo: </span>
+                    <span th:style="${isBalanceNegative} ? 'color: #ff4d4d;' : ''" th:text="${balance} + ' zł'"></span>
+                </li>
+                <li class="submenu-item">
+                    <a href="#" th:href="@{/logout}">Wyloguj się</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <header class="my-jumbotron">
+        <h1 class="my-jumbotron-header">Minty Finance</h1>
+        <p class="my-jumbotron-description" sec:authorize="!isAuthenticated()">
+            Czy wiesz, gdzie podziewają się Twoje pieniądze? My wiemy. <br>
+            Dołącz do Minty Finance już dziś i przywróć porządek w swoim budżecie.
+        </p>
+        <p class="my-jumbotron-description" sec:authorize="isAuthenticated()">
+            Witaj z powrotem!  <br>
+            Z Minty Finance każdy dzień to krok w stronę finansowego ładu i spokoju!
+        </p>
+    </header>
+
+    <main class="main-content" layout:fragment="content"></main>
+
+    <footer class="footer">
+        <p>MintyFinance 2023 <i class="fas fa-copyright"></i> MintyFinance.com</p>
+    </footer>
+</div>
+</body>
+</html>

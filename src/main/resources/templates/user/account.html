@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Moje konto</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+
+    <h2 class="list-heading">Moje konto</h2>
+    <ul class="list-border">
+        <li><a href="#" th:href="@{|/user/profile/${userID}|}">Mój profil</a></li>
+        <li><a href="#" th:href="@{|/user/edit/${userID}|}">Edytuj profil</a></li>
+        <li><a href="#" th:href="@{|/user/change-password/${userID}|}">Zmień hasło</a></li>
+        <li sec:authorize="hasRole('USER')">
+            <form data-confirm="Czy na pewno chcesz usunąć konto? Operacja jest nieodwracalna." th:action="@{/user/close-account}" method="post" class="close-account-form">
+                <button type="submit" class="btn-danger">Zamknij konto</button>
+            </form>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

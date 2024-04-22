@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+    <include file="0001_create_tables_users_and_role.xml" relativeToChangelogFile="true" />
+    <include file="0002_create_table_category.xml" relativeToChangelogFile="true" />
+    <include file="0003_create_table_position.xml" relativeToChangelogFile="true" />
+    <include file="0004_create_table_transaction_history.xml" relativeToChangelogFile="true" />
+    <include file="0005_create_table_error_report.xml" relativeToChangelogFile="true" />
+    <include file="0006_create_table_blocked.xml" relativeToChangelogFile="true" />
+    <include file="0007_create_table_goal.xml" relativeToChangelogFile="true" />
+    <include file="0008_create_table_password_reset_token.xml" relativeToChangelogFile="true" />
+
+    <!-- TEST DATA -->
+    <include file="../testdata/0001_users_and_roles.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0002_categories.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0003_positions.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0004_transaction_history.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0005_error_report.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0006_blocked.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0007_goals.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0008_password_reset_token.sql" relativeToChangelogFile="true" context="dev"/>
+</databaseChangeLog>

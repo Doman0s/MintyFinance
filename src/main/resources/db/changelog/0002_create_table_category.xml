@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="0002-1" author="mintyfinance">
+        <createTable tableName="category">
+            <column name="category_id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="users_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_users_category_id"
+                             referencedTableName="users"
+                             referencedColumnNames="users_id"
+                />
+            </column>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="description" type="VARCHAR(500)"/>
+        </createTable>
+        <addUniqueConstraint
+                columnNames="users_id, name"
+                tableName="category"
+                constraintName="uk_users_id_name"
+        />
+    </changeSet>
+</databaseChangeLog>

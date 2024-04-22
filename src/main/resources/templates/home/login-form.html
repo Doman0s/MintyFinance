@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Zaloguj się - MintyFinance</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+
+    <h2 class="list-heading">Zaloguj się</h2>
+    <form action="" th:action="@{/login}" method="post" class="mc-form">
+        <p th:if="${param.error}"
+           th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+           class="mc-form-message">
+            Błąd logowania.
+        </p>
+
+        <p th:if="${param.logout}" class="mc-form-message">
+            Zostałeś wylogowany, możesz zalogować się ponownie.
+        </p>
+
+        <div class="form-group">
+            <label for="username">Adres email</label>
+            <input id="username" class="form-control" name="username" placeholder="email">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Hasło</label>
+            <input id="password" class="form-control" name="password" placeholder="hasło" type="password">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zaloguj się</button>
+
+        <p class="forgot-password-link">
+            <a href="#" th:href="@{/reset-password}">Nie pamiętam hasła</a>
+        </p>
+
+        <p class="registration-link">Nie masz jeszcze konta? <a href="#" th:href="@{/registration}">Zarejestruj się</a></p>
+    </form>
+</main>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Edytuj kategorię</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+
+    <h2 class="list-heading">Edytuj kategorię</h2>
+    <form action="" th:action="@{/category/edit}" method="post" class="mc-form" th:object="${category}">
+        <input type="hidden" th:field="*{categoryId}">
+        <input type="hidden" th:field="*{userId}">
+
+        <p th:if="${errorMessage != null}" th:text="${errorMessage}" class="mc-form-message">
+            Błąd edycji.
+        </p>
+        <div class="form-group">
+            <label for="categoryName">Nazwa</label>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+            <input type="text" class="form-control" id="categoryName" placeholder="np. Wygrane z gier hazardowych" th:field="*{name}" maxlength="100"  required>
+        </div>
+
+        <div class="form-group">
+            <label for="categoryDescription">Opis - max 500 znaków</label>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+            <textarea id="categoryDescription" class="form-control" rows="5" th:field="*{description}" maxlength="500" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zatwierdź</button>
+    </form>
+</main>
+</body>
+</html>

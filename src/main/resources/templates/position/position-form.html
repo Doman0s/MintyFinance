@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>Dodaj nową pozycję</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+  <h2 class="list-heading">Dodaj nową pozycję</h2>
+
+  <form action="" th:action="@{/position/add}" method="post" class="mc-form" th:object="${position}">
+    <div class="form-group">
+      <label for="name">Nazwa</label>
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+      <input type="text" class="form-control" id="name" placeholder="Przykładowa nazwa" maxlength="100" required th:field="*{name}">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Opis</label>
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+      <textarea id="description" class="form-control" rows="10" th:field="*{description}" maxlength="500" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="amount">Kwota</label>
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></small>
+      <input type="number" class="form-control" id="amount" min="0.01" max="9999999" step="0.01" required th:field="*{amount}">
+    </div>
+
+    <div class="form-group">
+      <label>Typ pozycji</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="isIncome" id="income" value="true" required th:field="*{isIncome}">
+        <label class="form-check-label" for="income">
+          Przychód
+        </label>
+        <small class="form-text text-muted">Kwota zostanie dodana do Twojego bilansu.</small>
+      </div>
+      <div class="form-check mt-1">
+        <input class="form-check-input" type="radio" name="isIncome" id="expense" value="false" required th:field="*{isIncome}">
+        <label class="form-check-label" for="expense">
+          Wydatek
+        </label>
+        <small class="form-text text-muted">Kwota zostanie odjęta od Twojego bilansu.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Kategoria</label>
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></small>
+      <select id="category" class="form-control" th:field="*{category}" required>
+        <option value="" hidden>Wybierz kategorię</option>
+        <option th:each="category: ${categories}" th:value="${category.name}" th:text="${category.name}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="priority">Priorytet</label>
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}"></small>
+      <input type="number" class="form-control" id="priority" min="1" max="10" required th:field="*{priority}">
+    </div>
+
+    <div class="form-group">
+      <label for="rebillDate">Data transakcji</label>
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('rebillDate')}" th:errors="*{rebillDate}"></small>
+      <input type="date" class="form-control" id="rebillDate" th:field="*{rebillDate}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="rebillTime">
+        Godzina transakcji (Domyślna wartość to 00:00)
+      </label>
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('rebillTime')}" th:errors="*{rebillTime}"></small>
+      <input type="time" class="form-control" id="rebillTime" th:field="*{rebillTime}">
+    </div>
+
+    <div class="form-group">
+      <label for="recurrence">Cykliczność</label>
+      <small class="form-text text-danger" th:if="${#fields.hasErrors('recurrenceType')}" th:errors="*{recurrenceType}"></small>
+      <select id="recurrence" class="form-control" th:field="*{recurrenceType}" required>
+        <option value="" hidden>Wybierz cykliczność</option>
+        <option th:each="recurrenceType : ${T(com.mintyfinance.domain.position.RecurrenceType).values()}"
+                th:value="${recurrenceType}"
+                th:text="${recurrenceType.getDescription()}"></option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+  </form>
+</main>
+</body>
+</html>

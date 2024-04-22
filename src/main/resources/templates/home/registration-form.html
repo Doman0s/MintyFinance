@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Zarejestruj się | MintyFinance</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <h2 class="list-heading">Zarejestruj się</h2>
+    <form action="#" th:action="@{/registration}" method="post" class="mc-form" th:object="${user}">
+        <div class="form-group">
+            <label for="firstName">Imię</label>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
+            <input id="firstName" class="form-control" type="text" placeholder="Imię" th:field="*{firstName}" minlength="2" maxlength="30" required>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Nazwisko</label>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+            <input id="lastName" class="form-control" type="text" placeholder="Nazwisko" th:field="*{lastName}" minlength="2" maxlength="40" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dateOfBirth">Data urodzenia</label>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></small>
+            <input id="dateOfBirth" class="form-control" type="date" min="1923-01-01" max="2010-12-31" th:field="*{dateOfBirth}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Płeć</label>
+            <select id="gender" class="form-control" th:field="*{gender}" required>
+                <option value="M">Mężczyzna</option>
+                <option value="F">Kobieta</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="balance">Stan początkowy konta</label>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}"></small>
+            <input id="balance" class="form-control" type="number" step="0.01" min="0.0" max="999999999" placeholder="0.00" th:field="*{balance}">
+            <small class="form-text text-muted">Wprowadź aktualny stan Twojego konta, aby zacząć śledzenie finansów
+                od tej wartości. Możesz także zostawić domyślną wartość 0.</small>
+        </div>
+
+        <p th:if="${errorMessage != null}" th:text="${errorMessage}" class="mc-form-message">
+            Błąd rejestracji.
+        </p>
+        <div class="form-group">
+            <label for="email">Adres email</label>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+            <input id="email" class="form-control" placeholder="email" th:field="*{email}" maxlength="100" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Hasło</label>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+            <input id="password" class="form-control" placeholder="hasło" type="password" th:field="*{password}" minlength="6" maxlength="32" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+    </form>
+</main>
+</body>
+</html>

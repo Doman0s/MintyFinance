@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Kategorie - MintyFinance</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+
+    <h2 class="list-heading">Kategorie</h2>
+    <p class="list-description">
+        Poniżej znajduje się lista wszystkich dostępnych kategorii. Pierwsze dziesięć to kategorie domyślne, które są
+        dostępne dla wszystkich użytkowników. Następne są Twoje indywidualne kategorie, które masz możliwość edytować
+        według własnych potrzeb.
+    </p>
+
+    <ul class="list-border">
+        <li th:each="category, count: ${categories}">
+            <div>
+                <a th:href="@{|/category/${category.getCategoryId()}|}"
+                   th:text="${count.index + 1 + '. ' + category.name}"></a>
+            </div>
+            <div class="button-container" th:if="${(userID == category.userId) || isAdmin}">
+                <a th:href="@{|/category/edit/${category.getCategoryId()}|}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit"></i> Edytuj
+                </a>
+
+                <form data-confirm="Czy na pewno usunąć?" th:action="@{'/category/delete/' + ${category.getCategoryId()}}" method="POST">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button type="submit" class="btn btn-outline-danger">
+                        <i class="fas fa-trash-alt"></i> Usuń
+                    </button>
+                </form>
+            </div>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

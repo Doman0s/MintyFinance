@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Zgłaszanie błędów</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+
+    <h2 class="list-heading">Zgłoś błąd</h2>
+
+    <form action="#" th:action="@{/error-report}" method="post" class="mc-form" th:object="${error}">
+        <div class="form-group">
+            <label for="errorDescription">Opis błędu - max 500 znaków</label>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+            <textarea id="errorDescription" class="form-control" rows="5" th:field="*{description}" maxlength="500" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Wyślij</button>
+    </form>
+</main>
+</body>
+</html>

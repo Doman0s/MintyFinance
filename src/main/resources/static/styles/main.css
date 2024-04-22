@@ -1,0 +1,434 @@
+/*CSS reset*/
+* {
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+:root {
+    --background-color-dark: #303030; /* Kolor tła dla trybu ciemnego */
+    --background-color-light: #424242; /* Kolor tła dla trybu jasnego */
+}
+.theme-switcher {
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding-bottom: 5px;
+}
+/* Dla efektu przejścia między ikonami */
+#moonIcon, #sunIcon {
+    transition: display 0.5s ease;
+}
+.my-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--background-color-light); /* Domyślnie używaj jasnego koloru tła */
+}
+
+/*Zmiana domyślnego fontu*/
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/*Ustawienie koloru odnośników i usunięcie podkreśleń*/
+a {
+    text-decoration: none !important;
+    color: #34A798;
+}
+a:hover {
+    color: #028482;
+}
+
+.position-buttons {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+}
+
+.position-button {
+    margin-left: 5px;
+}
+
+/*Kolor tła w głównym kontenerze i ustawienie elastycznego rozkładu
+Elementy będą ustawiane jeden pod drugim*/
+
+.search-bar-location {
+    justify-content: flex-start;
+    align-items: baseline;
+}
+.sort-container {
+    display: flex;
+    align-items: center;
+}
+
+.sort-options {
+    display: flex;
+    align-items: center;
+}
+.direction-select {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.direction-options {
+    display: flex;
+    margin-top: 7px;
+}
+
+.direction-option {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.direction-option input {
+    display: none;
+}
+
+.direction-option i {
+    font-size: 16px;
+}
+
+.direction-option input:checked + i {
+    color: #007bff;
+}
+label[for="sortBy"] {
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 8px;
+}
+label[for="form1"] {
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 8px;
+}
+
+.isFilter {
+    font-weight: bold;
+    margin-right: 10px;
+}
+#isIncomeFilter {
+    margin-right: 5px;
+}
+.button-container {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/*Grafika menu START*/
+.my-jumbotron {
+    background-image: url("../img/banner.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    text-align: center;
+}
+.my-jumbotron-header {
+    font-size: 3.2rem;
+    margin: 1rem 0;
+    text-shadow: 3px 3px 4px black;
+    color:  #e0f0f0;
+}
+.my-jumbotron-description {
+    font-size: 1.3rem;
+    text-shadow: 3px 3px 4px black;
+    color:  #e0f0f0;
+}
+/*Grafika menu END*/
+
+/*Główna sekcja powinna być skalowana wraz z rozciąganiem okna przeglądarki
+i powinna zajmować większość dostępnej przestrzeni*/
+.main-content {
+    flex: 1;
+}
+
+/*Listing START*/
+/*Nagłówek*/
+.list-heading,
+.list-description {
+    text-align: center;
+    margin: 25px 0 15px 0;
+}
+/*Usunięcie dekoracji elementów listy (kropki na początku)*/
+.position-list {
+    list-style-type: none;
+}
+/*Margines i ramka wokół pojedynczej pozycji*/
+.position-list-item {
+    margin-bottom: 16px;
+    border: 1px #6d6d6d solid;
+    width: 100%;
+    display: flex; /
+    align-items: center;
+    justify-content: space-between;
+}
+/*Plakat - usuniecie paddingu*/
+.position-list-item-poster {
+    display: block;
+    max-width: 200px;
+}
+/*Karta pozycji*/
+.position-list-item-card {
+    padding: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.position-list-item-content > * {
+    margin: 4px 0;
+}
+.position-list-item-title {
+    color: #34A798;
+}
+.position-list-item-rating{
+    font-size: 1rem;
+}
+/*Listing END*/
+
+.filter-form2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.sort-container2,
+.filter-container2 {
+    margin-bottom: 10px;
+}
+
+.direction-option2,
+.filter-container2 label {
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.clear-filters2 {
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+/*kolor tekstu w pozycjach menu*/
+.colored-text {
+    color: #8CCBB1;
+}
+
+.colored-text-dark {
+    color: #34A798;
+}
+.center {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+/*MENU START*/
+/*Kolor logotypu i przycisku rozwijającego menu*/
+.logo,
+#toggle-icon {
+    color: #34A798;
+}
+/*Ustawienia dla responsywnego menu*/
+.menu {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+/*Elementy menu domyślnie są ukryte*/
+.menu-item {
+    width: 100%;
+    padding-top: 13px;
+    padding-right: 28px;
+    border-bottom: 1px #6d6d6d solid;
+    text-align: center;
+    display: none;
+}
+.submenu-item {
+    list-style-type: none;
+    margin-left: 20px;
+}
+/*Po wciśnięciu przycisku elementy będą widoczne*/
+.expanded > .menu-item {
+    display: block;
+}
+/*padding dla elementów menu*/
+.menu-logo-container,
+.menu-toggle {
+    display: block;
+    padding-top: 10px;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-right: 15px;
+}
+/*MENU END*/
+
+/*FOOTER START*/
+/*Wyśrodkowanie stopki*/
+.footer {
+    padding: 8px;
+    text-align: center;
+}
+/*FOOTER END*/
+
+/*Responsive*/
+@media only screen and (min-width: 992px) {
+    /*Na ekranie powyżej 992px ukrywamy przycisk do rozwijania menu*/
+    .menu-toggle {
+        display: none;
+    }
+
+    /*Elementy menu nie powinny już zajmować całej szerokości, tylko być obok siebie*/
+    .menu-item {
+        font-size: 18px;
+        display: block;
+        width: auto;
+        border-bottom: 0;
+    }
+
+    /*Kontener z logo powinien być rozciągnięty, a nawigacja po prawej stronie*/
+    .menu-logo-container {
+        font-size: 23px;
+        flex: 1;
+    }
+
+    /*Na dużym ekranie ograniczamy szerokość do 960px*/
+    .main-content,
+    .menu {
+        align-self: center;
+        width: 960px;
+    }
+}
+
+/*error pages START*/
+.error-container {
+    margin: 32px auto;
+}
+.error-container > * {
+    display: block;
+    text-align: center;
+}
+.error-header,
+.error-icon {
+    font-size: 2rem;
+    margin: 16px 0;
+}
+/*error pages END*/
+
+.list-border {
+    margin: auto;
+    list-style: none;
+}
+.list-border > li {
+    font-size: 1.2rem;
+    border: 1px #6d6d6d solid;
+    padding: 16px;
+    text-align: center;
+}
+
+/*textarea domyślnie nie dziedziczy czcionki z body*/
+textarea {
+    font-family: inherit;
+}
+/*etykiety i inputy jeden pod drugim z odstępami po bokach*/
+.mc-form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 32px;
+}
+/*odstępy między etykietami i inputami*/
+.mc-form > * {
+    margin-top: 8px;
+}
+/*większe inputy z paddingami*/
+.mc-form > input,
+.mc-form > textarea,
+.mc-form > button {
+    font-size: 1.2rem;
+    color: black;
+    padding: 8px;
+}
+.mc-form > button {
+    margin-top: 16px;
+    background-color: white;
+    color: #ffc107;
+    border: none;
+}
+
+.notification-bar {
+    text-align: center;
+    background-color: #ffc107;
+    padding: 8px 0;
+}
+
+.mc-form > input,
+.mc-form > textarea,
+.mc-form > button,
+.mc-form > select {
+    font-size: 1.2rem;
+    color: black;
+    padding: 8px;
+}
+
+/*kolor tekstu dla select i option*/
+select, option {
+    color: black;
+}
+
+.w-15 {
+    width: 15%;
+}
+
+/* odstępy position-listing sortowanie i filtrowanie */
+.row > .col-auto + .col-auto {
+    margin-left: 20px;
+}
+
+/*Ikony edycji i usuwania, zmiana ich koloru przed i po najechaniu START*/
+.btn-outline-primary i.fas {
+    color: #007bff;
+}
+.btn-outline-danger i.fas {
+    color: #dc3545;
+}
+.btn-outline-success i.fas {
+    color: #28a745;
+}
+/* Dla Ikon Edycji */
+.btn-outline-primary:hover i.fas {
+    color: white;
+}
+.btn-outline-success:hover i {
+    color: #ffffff;
+}
+/* Dla Ikon Usunięcia */
+.btn-outline-danger:hover i.fas {
+    color: white;
+}
+/*Ikony STOP*/
+
+/*Większy checkbox*/
+.mc-form > input[type=checkbox] {
+    transform: scale(1.5);
+    margin-left: 5px;
+}
+/*Biały kolor tekstu przy wyborze pliku*/
+.mc-form > input[type=file] {
+    color: white;
+}
+
+/*Tekst nad formularzem*/
+.mc-form-message {
+    color: #ffc107;
+    text-align: center;
+}
+
+.registration-link {
+    text-align: center;
+    margin-top: 32px;
+}

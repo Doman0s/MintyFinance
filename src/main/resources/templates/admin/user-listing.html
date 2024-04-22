@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Blokowanie użytkowników - MintyFinance</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <form th:action="@{/admin/search}" method="get">
+                <div class="input-group mt-2 px-4">
+                    <input type="text" name="email" placeholder="Adres email..." class="form-control">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-4">
+            <form th:action="@{/admin/user-listing}" method="get" class="form-inline">
+                <div class="form-group mt-2 ml-4">
+                    <label for="filter" class="mr-2">Filtrowanie</label>
+                    <div class="input-group">
+                        <select name="filter" id="filter" class="form-control">
+                            <option value="all">Wszyscy</option>
+                            <option value="blocked">Zablokowani</option>
+                            <option value="unblocked">Niezablokowani</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Filtruj</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h2 class="list-heading" th:text="${heading}">Blokowanie użytkowników</h2>
+    <p class="list-description px-1" th:text="${description}">Poniżej znajdziesz listę wszystkich użytkowników w bazie danych.</p>
+    <ul class="list-border">
+        <li th:each="user: ${users}">
+            <span th:text="${user.getEmail()}"></span>
+            <a th:if="${bannedUsersIds.contains(user.getUserId())}" th:href="@{|/admin/unblock/${user.getUserId()}|}" class="btn btn-success btn-sm ml-2">Odblokuj</a>
+            <a th:unless="${bannedUsersIds.contains(user.getUserId())}" th:href="@{|/admin/block/${user.getUserId()}|}" class="btn btn-danger btn-sm ml-2">Zablokuj</a>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

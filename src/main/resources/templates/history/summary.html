@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Podsumowanie - MintyFinance</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+        Belka z powiadomieniami
+    </p>
+
+    <h2 class="list-heading">Podsumowanie wykonanych transakcji</h2>
+    <p class="list-description">
+        Poniżej znajdziesz podsumowanie wszystkich wykonanych transakcji. Dane pobierane są z historii.
+    </p>
+
+    <ul class="list-border">
+        <li th:each="entry: ${summaryEntries}">
+            <h3 th:text="${entry.key}" class="colored-text-dark"></h3>
+
+            <strong class="colored-text">Łączne dochody: </strong>
+            <span th:text="${entry.value.incomeExpenseSummary.totalIncome} + ' zł'"></span><br>
+            <strong class="colored-text mt-1">Łączne wydatki: </strong>
+            <span th:style="${entry.value.incomeExpenseSummary.totalExpense.compareTo(zero) < 0} ? 'color: #ff4d4d;' : ''" th:text="${entry.value.incomeExpenseSummary.totalExpense} + ' zł'"></span>
+
+            <br><br>
+            <strong class="colored-text">Transakcje</strong>
+            <ul class="position-list">
+                <li th:each="historyItem: ${entry.value.transactions}">
+                    <span th:text="${historyItem.position.name} + ': '" class="colored-text"></span>
+                    <span th:style="${!historyItem.position.isIncome} ? 'color: #ff4d4d;' : ''"
+                          th:text="${!historyItem.position.isIncome} ? '-' + ${historyItem.position.amount} + ' zł' : ${historyItem.position.amount} + ' zł'">
+                    </span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

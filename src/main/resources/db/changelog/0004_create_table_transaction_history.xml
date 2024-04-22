@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="0004-1" author="mintyfinance">
+        <createTable tableName="transaction_history">
+            <column name="transactions_history_id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="users_id" type="BIGINT">
+                <constraints nullable="false"
+                            foreignKeyName="fk_users_history_id"
+                            referencedTableName="users"
+                            referencedColumnNames="users_id"
+                />
+            </column>
+            <column name="position_id" type="BIGINT">
+                <constraints nullable="false"
+                            foreignKeyName="fk_position_history_id"
+                            referencedTableName="position"
+                            referencedColumnNames="position_id"
+                />
+            </column>
+            <column name="transaction_date" type="TIMESTAMP"/>
+            <column name="amount" type="DECIMAL(9, 2)"/>
+            <column name="balance_before_transaction" type="DECIMAL(11, 2)"/>
+            <column name="balance_after_transaction" type="DECIMAL(11, 2)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

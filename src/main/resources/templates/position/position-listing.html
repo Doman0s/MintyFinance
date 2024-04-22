@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div class="my-container">
+    <main class="main-content" layout:fragment="content">
+        <p class="notification-bar" th:if="${notification}" th:text="${notification}">
+            Belka z powiadomieniami
+        </p>
+
+        <div class="container">
+            <div class="row">
+                <!-- Kolumna lewa - formularz do wyszukiwania -->
+                <div class="col-md-4">
+                    <div class="input-group search-bar-location">
+                        <form th:action="@{/position/search}" method="get" class="form-outline form-inline d-flex">
+                            <label for="form1" class="mb-2">Wyszukiwanie: </label>
+                            <input type="search" id="form1" name="name" placeholder="Nazwa pozycji..." class="form-control" />
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Środkowa kolumna - formularz do sortowania i filtrowania -->
+                <div class="col-md-8">
+                    <form th:action="@{/}" method="get">
+                        <div class="row">
+                            <!-- Filtrowanie -->
+                            <div class="col-md-6">
+                                <label class="isFilter mt-2">Filtr:</label>
+                                <label for="isIncomeFilter">Typ</label>
+                                <select id="isIncomeFilter" name="isIncome" class="form-control">
+                                    <option value="">Wszystko</option>
+                                    <option value="true">Przychody</option>
+                                    <option value="false">Wydatki</option>
+                                </select>
+                                <label for="recurrenceTypeFilter" class="mt-2">Cykliczność</label>
+                                <select id="recurrenceTypeFilter" name="recurrenceType" class="form-control">
+                                    <option value="">Wszystko</option>
+                                    <option th:each="type : ${T(com.mintyfinance.domain.position.RecurrenceType).values()}" th:value="${type}" th:text="${type.description}"></option>
+                                </select>
+                            </div>
+
+                            <!-- Sortowanie -->
+                            <div class="col-md-6">
+                                <div class="sort-container">
+                                    <div class="sort-options">
+                                        <div class="form-group">
+                                            <label for="sortBy">Sortowanie:</label>
+                                            <select name="sortBy" id="sortBy" class="form-control">
+                                                <option selected value="name">Nazwa</option>
+                                                <option value="amount">Kwota</option>
+                                                <option value="priority">Priorytet</option>
+                                            </select>
+                                        </div>
+                                        <div class="direction-select mt-4">
+                                            <div class="direction-options">
+                                                <label class="direction-option" title="Rosnąco">
+                                                    <input type="radio" class="form-control" name="direction" value="asc" th:checked="${direction == 'asc'}" />
+                                                    <i class="fas fa-caret-up"></i>
+                                                </label>
+                                                <label class="direction-option" title="Malejąco">
+                                                    <input type="radio" class="form-control" name="direction" value="desc" th:checked="${direction == 'desc'}" />
+                                                    <i class="fas fa-caret-down"></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-75 mt-4">Sortuj i filtruj</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="list-heading" th:text="${heading}">Wszystkie pozycje użytkownika</h2>
+        <ul class="position-list" th:remove="all-but-first">
+            <li class="position-list-item" th:each="position: ${positions}" th:if="${!position.isInactive()}">
+                <div class="position-list-item-card">
+                    <div class="position-list-item-content">
+                        <h3 class="position-list-item-title" th:text="${position.name}">Nazwa pozycji</h3>
+                    </div>
+
+                    <div class="position-list-item-rating">
+                        <h5 th:text="${position.description}"></h5>
+                        <h5>
+                            <span class="colored-text">Kwota: </span>
+                            <span th:style="${!position.isIncome} ? 'color: #ff4d4d;' : ''"
+                                  th:text="${position.amount} + ' zł'"></span>
+                        </h5>
+                        <h5>
+                            <i class="fas fa-star colored-text"></i>
+                            <span class="colored-text">Priorytet: </span>
+                            <span th:text="${position.priority} + '/10'"></span>
+                        </h5>
+                        <h5>
+                            <span class="colored-text">Najbliższa data wykonania: </span>
+                            <span th:text="${position.getFormattedRebillDateTime()}"></span>
+                        </h5>
+                        <h5>
+                            <span class="colored-text">Częstotliwość: </span>
+                            <span th:text="${position.getRecurrenceType().description}"></span>
+                        </h5>
+                    </div>
+
+                    <div class="position-buttons">
+                        <a th:href="@{|/position/edit/${position.getPositionId()}|}" class="btn btn-outline-primary position-button">
+                            <i class="fas fa-edit"></i> Edytuj
+                        </a>
+                        <form data-confirm="Czy na pewno usunąć?" th:action="@{'/position/delete/' + ${position.getPositionId()}}" method="POST" class="position-button">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="fas fa-trash-alt"></i> Usuń
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </main>
+</div>
+</body>
+</html>
